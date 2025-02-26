@@ -31,7 +31,7 @@ import (
     "github.com/ethereum/go-ethereum/ethclient"
 
 
-
+"go forward to next page"
 # Initialize Hardhat
 npx hardhat
 
@@ -58,8 +58,10 @@ touch contracts/RoseQuartztoken.sol
 npm install --save-dev hardhat @nomiclabs/hardhat-waffle ethereum-waffle chai @nomiclabs/hardhat-ethers
 npx hardhat compile
 npx hardhat run scripts/deploy.js --network hardhat
+"go forward to next page"
 
-    require('@nomiclabs/hardhat-waffle');
+#
+  require('@nomiclabs/hardhat-waffle');
     require('@nomiclabs/hardhat-ethers');
     require('dotenv').config();
     
@@ -76,7 +78,7 @@ npx hardhat run scripts/deploy.js --network hardhat
       }
     };
 const RoseQuartzToken = artifacts.require("RoseQuartzToken");
-
+"go forward to next page"
 module.exports = function (deployer) {
     const initialSupply = web3.utils.toWei('55000000', 'ether'); // 55 million tokens with 3 decimals
     deployer.deploy(RoseQuartzToken, initialSupply);
@@ -109,6 +111,8 @@ main()
         console.error(error);
         process.exit(1);
     });
+"go forward to next page"
+
 
 # RoseQuartzToken Transaction Fee
 
