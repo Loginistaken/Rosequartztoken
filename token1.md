@@ -1,4 +1,4 @@
- 
+
 n
 pm init -y
 ackage main
@@ -80,7 +80,7 @@ npx hardhat run scripts/deploy.js --network hardhat
 const RoseQuartzToken = artifacts.require("RoseQuartzToken");
 "go forward to next page"
 module.exports = function (deployer) {
-    const initialSupply = web3.utils.toWei('55000000', 'ether'); // 55 million tokens with 3 decimals
+    const initialSupply = web3.utils.toWei('550000000000', 'ether'); // 550 billion tokens with 3 decimals
     deployer.deploy(RoseQuartzToken, initialSupply);
 };
 async function main() {
@@ -88,21 +88,21 @@ async function main() {
     console.log("Deploying contracts with the account:", deployer.address);
 
     const RoseQuartzToken = await ethers.getContractFactory("RoseQuartzToken");
-    const initialSupply = ethers.utils.parseUnits('55000000', 3); // 55 million tokens with 3 decimals
+    const initialSupply = ethers.utils.parseUnits('550000000000', 3); // 550 billion tokens with 3 decimals
     const feeRecipient = "0xYourFeeRecipientAddress"; // Replace with your fee recipient address
     const roseQuartzToken = await RoseQuartzToken.deploy(initialSupply, feeRecipient);
 
     console.log("RoseQuartzToken deployed to:", roseQuartzToken.address);
 
-    // Set the burn rate to 1.2% (12 / 1000)
+    // Set the burn rate to .012% (12 / 100000)
     let tx = await roseQuartzToken.setBurnRate(12);
     await tx.wait();
 
-    // Set the transaction fee rate to 5.5% (55 / 1000)
+    // Set the transaction fee rate to .055% (55 / 100000)
     tx = await roseQuartzToken.setTransactionFeeRate(55);
     await tx.wait();
 
-    console.log("Burn rate set to 1.2% and transaction fee rate set to 5.5%");
+    console.log("Burn rate set to 1.2% and transaction fee rate set to 0.055%");
 }
 
 main()
@@ -120,8 +120,8 @@ main()
 RoseQuartzToken (Rosequartz)) includes a transaction fee mechanism to support the ongoing maintenance and development of the project. This fee is designed to ensure the sustainability and growth of the RoseQuartzToken ecosystem.
 
 ### Transaction Fee Details
-- **Burn Rate**: 1.2% of each transaction is burned, reducing the total supply and creating scarcity.
-- **Transaction Fee Rate**: 5.5% of each transaction is collected as a maintenance fee.
+- **Burn Rate**: .012% of each transaction is burned, reducing the total supply and creating scarcity.
+- **Transaction Fee Rate**: .055% of each transaction is collected as a maintenance fee.
 - **Fee Recipient**: The collected fees are sent to a designated address used for project maintenance and development.
 
 ### Purpose of the Transaction Fee
