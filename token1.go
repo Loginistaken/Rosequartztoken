@@ -1,4 +1,3 @@
-
 n
 pm init -y
 ackage main
