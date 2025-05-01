@@ -102,7 +102,7 @@ async function main() {
     tx = await roseQuartzToken.setTransactionFeeRate(55);
     await tx.wait();
 
-    console.log("Burn rate set to 1.2% and transaction fee rate set to 0.055%");
+    console.log("Burn rate set to .012% and transaction fee rate set to 0.055%");
 }
 
 main()
