@@ -71,10 +71,10 @@ npx hardhat run scripts/deploy.js --network hardhat
         hardhat: {
           chainId: 1337
         },
-        rinkeby: {
-          url: `https://quiknode PROJECT_ID}`,
-          accounts: [`0x${process.env.PRIVATE_KEY}`]
-        }
+       74|         goerli: {
+          url: `https://goerli.infura.io/v3/YOUR_INFURA_PROJECT_ID`, // Replace with your Infura Project ID
+          accounts: [`0x${process.env.PRIVATE_KEY}`] // Use the same private key as before
+       }
       }
     };
 const RoseQuartzToken = artifacts.require("RoseQuartzToken");
