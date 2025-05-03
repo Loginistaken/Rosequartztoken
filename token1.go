@@ -141,3 +141,52 @@ For more information, please visit our [official website](https://example.com) o
 
 **E. Lindau**  
 Boss at RoseQuartz Token Team
+package main
+
+import (
+	"fmt"
+	"strings"
+)
+func displayFinalAcknowledgment() {
+	width := 84
+	title := "Final Acknowledgment • Multi-Language Blockchain System"
+	content := `
+This code is part of a multi-language system developed using Go, Java, and Geth.
+
+It includes blockchain logic, cryptographic automation, and AI-powered security.
+
+This project integrates suggestions from:
+• GitHub Copilot
+• OpenAI ChatGPT
+• Community-driven open-source tools
+
+Legal Notice:
+This acknowledgment serves as a declaration of AI-assisted contribution and shared innovation.
+All rights belong to the original developers and contributors of this project.
+Generated content from AI tools remains under the license of this repository.
+
+This ending serves as both an ethical statement and a legal attribution of integrated tooling.
+
+— End of Execution —
+`
+
+	printLegalPopup(width, title, content)
+}
+
+func printLegalPopup(width int, title, content string) {
+	fmt.Println(strings.Repeat("*", width))
+
+	// Print centered title
+	padding := (width - len(title)) / 2
+	fmt.Println(strings.Repeat(" ", padding) + title)
+	fmt.Println(strings.Repeat("-", width))
+
+	// Print content
+	for _, line := range strings.Split(content, "\n") {
+		if trimmed := strings.TrimSpace(line); trimmed != "" {
+			fmt.Println(trimmed)
+		}
+	}
+
+	fmt.Println(strings.Repeat("*", width))
+}
