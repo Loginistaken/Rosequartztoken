@@ -79,7 +79,8 @@ npx hardhat run scripts/deploy.js --network hardhat
 const RoseQuartzToken = artifacts.require("RoseQuartzToken");
 "go forward to next page"
 module.exports = function (deployer) {
-    const initialSupply = web3.utils.toWei(550,000,000,000,000 , 'ether'); // 550 billion tokens with 3 decimals multiply by 1e3
+    const initialSupply = web3.utils.toWei(550,000,000,000,000 , 'ether'); 
+	// 550 billion tokens with 3 decimals multiply by 1e3
     deployer.deploy(RoseQuartzToken, initialSupply);
 };
 async function main() {
