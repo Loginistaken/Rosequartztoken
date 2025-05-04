@@ -267,6 +267,10 @@ import (
 	"fmt"
 	"strings"
 )
+	// SPDX-License-Identifier: MIT
+// The owner has the right to set and modify the burn rate, up to 10%.
+// By using this software, users accept these terms.
+						  
 func displayFinalAcknowledgment() {
 	width := 84
 	title := "Final Acknowledgment • Multi-Language Blockchain System"
