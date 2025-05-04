@@ -41,7 +41,11 @@ echo "require('@nomiclabs/hardhat-waffle'); module.exports = { solidity: '0.8.0'
 # Create a deployment script
 mkdir -p scripts
 touch scripts/deploy.js
-echo "async function main() { const [deployer] = await ethers.getSigners(); console.log('Deploying contracts with the account:', deployer.address); const RoseQuartzCoin = await ethers.getContractFactory('RoseQuartzCoin'); const initialSupply = ethers.utils.parseUnits('1000', 18); const roseQuartzCoin = await RoseQuartzCoin.deploy(initialSupply); console.log('RoseQuartzCoin deployed to:', roseQuartzCoin.address); } main().then(() => process.exit(0)).catch((error) => { console.error(error); process.exit(1); });" > scripts/deploy.js
+echo "async function main() { const [deployer] = await ethers.getSigners(); console.log('Deploying contracts with the account:', 
+deployer.address); const RoseQuartzCoin = await ethers.getContractFactory('RoseQuartzCoin');
+const initialSupply = ethers.utils.parseUnits('1000', 18); const roseQuartzCoin = await RoseQuartzCoin.deploy(initialSupply);
+console.log('RoseQuartzCoin deployed to:', roseQuartzCoin.address); } main().then(() =>
+process.exit(0)).catch((error) => { console.error(error); process.exit(1); });" > scripts/deploy.js
 
 # Compile your contracts with Hardhat
 npx hardhat compile
@@ -334,7 +338,8 @@ func displayFinalAcknowledgment() {
 	width := 84
 	title := "Final Acknowledgment • Multi-Language Blockchain System"
 	content := `
-This code is part of a Geth language system developed using Go,includes blockchain logic, cryptographic automation, and AI-powered security.
+This code is part of a Geth language system developed using Go,includes blockchain logic,
+cryptographic automation, and AI-powered security.
 
 This project integrates suggestions from:
 • GitHub Copilot
