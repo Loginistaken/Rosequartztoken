@@ -208,11 +208,17 @@ For more information, please visit our [official website](https://example.com) o
 ---
 **E. Lindau**  
 Boss at RoseQuartz Token Team
-							  package main
+	package main
 
 import (
 	"errors"
+	"fmt"
 )
+
+// LEGAL ACKNOWLEDGMENT:
+// The token owner has the exclusive right to adjust the burn rate.
+// The rate is hard-limited to 10% to ensure fair use.
+// Changes can only be made by the registered owner account.
 
 // Token represents the structure of the token
 type Token struct {
@@ -234,7 +240,59 @@ func (t *Token) IncreaseBurnRate(requester string, increment float64) error {
 		return errors.New("only the owner can increase the burn rate")
 	}
 
-	// Example: Optional limit check to prevent excessive burn rate
+	// Limit the maximum burn rate to 10% (0.1)
+	if t.burnRate+increment > 0.1 {
+		return errors.New("burn rate cannot exceed 10%")
+	}
+
+	t.burnRate += increment
+	return nil
+}
+
+// GetBurnRate returns the current burn rate
+func (t *Token) GetBurnRate() float64 {
+	return t.burnRate
+}
+
+func main() {
+	// Initialize token with 1.2% burn rate
+	token := NewToken("owner123", 0.012)
+
+	// Attempt to increase the burn rate by 0.5%
+	err := token.IncreaseBurnRate("owner123", 0.005)
+	if err != nil {
+		panic(err)
+	}
+
+	// Output the new burn rate
+	fmt.Printf("New burn rate: %.2f%%\n", token.GetBurnRate()*100)
+}
+						  package main
+
+import (
+	"errors"
+)
+
+// Token represents the structure of the token
+type Token struct {
+	owner    string
+	burnRate float64
+}
+
+// NewToken creates a new token with an initial owner and burn rate
+func NewToken(owner string, initialBurnRate float64) *Token {
+	return &Token{
+		owner:    owner,
+		burnRate: initialBurnRate,
+	}
+}
+
+func (t *Token) IncreaseBurnRate(requester string, increment float64) error {
+	if requester != t.owner {
+		return errors.New("only the owner can increase the burn rate")
+	}
+
+	// Example: #test
 	if t.burnRate+increment > 0.1 { // 10% maximum burn rate
 		return errors.New("burn rate cannot exceed 10%")
 	}
@@ -250,7 +308,7 @@ func (t *Token) GetBurnRate() float64 {
 
 func main() {
 	// Example usage
-	token := NewToken("owner123", 0.012) // Initial burn rate is 1.2%
+	token := NewToken("owner123", 0.012) // Initial burn rate is .012%
 
 	// Owner attempts to increase burn rate
 	err := token.IncreaseBurnRate("owner123", 0.005) // Increase by 0.5%
