@@ -139,18 +139,16 @@ func main() {
 		log.Fatalf(" Failed to connect to Ethereum client: %v", err)
 	}
 
-	//  Replace with your actual token contract and wallet addresses
+	
 	tokenAddress := common.HexToAddress("0xYourTokenContractAddress")
 	ownerAddress := common.HexToAddress("0xOwnerWalletAddress")
 	coFounderAddress := common.HexToAddress("0xCoFounderWalletAddress")
 
-	// Load private key (ensure this is securely managed in production)
 	privateKey, err := crypto.HexToECDSA("your_private_key_without_0x")
 	if err != nil {
 		log.Fatalf(" Failed to load private key: %v", err)
 	}
 
-	// Setup signer with correct chain ID
 	chainID := big.NewInt(1) // Mainnet; update if using testnet
 	auth, err := bind.NewKeyedTransactorWithChainID(privateKey, chainID)
 	if err != nil {
@@ -185,7 +183,8 @@ main()
 # RoseQuartzToken Transaction Fee
 
 ### Overview
-RoseQuartzToken (Rosequartz)) includes a transaction fee mechanism to support the ongoing maintenance and development of the project. This fee is designed to ensure the sustainability and growth of the RoseQuartzToken ecosystem.
+RoseQuartzToken (Rosequartz)) includes a transaction fee mechanism to support the ongoing maintenance and development of the project. 
+This fee is designed to ensure the sustainability and growth of the RoseQuartzToken ecosystem.
 
 ### Transaction Fee Details
 - **Burn Rate**: .012% of each transaction is burned, reducing the total supply and creating scarcity.
@@ -193,7 +192,8 @@ RoseQuartzToken (Rosequartz)) includes a transaction fee mechanism to support th
 - **Fee Recipient**: The collected fees are sent to a designated address used for project maintenance and development.
 
 ### Purpose of the Transaction Fee
-The transaction fee is used to cover the costs associated with maintaining and improving the RoseQuartzToken ecosystem. This includes, but is not limited to:
+The transaction fee is used to cover the costs associated with maintaining and improving the RoseQuartzToken ecosystem.
+This includes, but is not limited to:
 - Development and deployment of new features and updates.
 - Security audits and enhancements.
 - Marketing and community engagement initiatives.
@@ -205,11 +205,62 @@ For more information, please visit our [official website](https://example.com) o
 oseQuartzToken is committed to complying with all relevant regulations and ensuring transparency in its operations. 
 
 For more information, please visit our [official website](https://example.com) or contact our support team at support@example.com.
-
 ---
-
 **E. Lindau**  
 Boss at RoseQuartz Token Team
+							  package main
+
+import (
+	"errors"
+)
+
+// Token represents the structure of the token
+type Token struct {
+	owner    string
+	burnRate float64
+}
+
+// NewToken creates a new token with an initial owner and burn rate
+func NewToken(owner string, initialBurnRate float64) *Token {
+	return &Token{
+		owner:    owner,
+		burnRate: initialBurnRate,
+	}
+}
+
+// IncreaseBurnRate allows the owner to increase the burn rate
+func (t *Token) IncreaseBurnRate(requester string, increment float64) error {
+	if requester != t.owner {
+		return errors.New("only the owner can increase the burn rate")
+	}
+
+	// Example: Optional limit check to prevent excessive burn rate
+	if t.burnRate+increment > 0.1 { // 10% maximum burn rate
+		return errors.New("burn rate cannot exceed 10%")
+	}
+
+	t.burnRate += increment
+	return nil
+}
+
+// GetBurnRate returns the current burn rate
+func (t *Token) GetBurnRate() float64 {
+	return t.burnRate
+}
+
+func main() {
+	// Example usage
+	token := NewToken("owner123", 0.012) // Initial burn rate is 1.2%
+
+	// Owner attempts to increase burn rate
+	err := token.IncreaseBurnRate("owner123", 0.005) // Increase by 0.5%
+	if err != nil {
+		panic(err)
+	}
+
+	// Print new burn rate
+	println("New burn rate:", token.GetBurnRate())
+}
 package main
 
 import (
