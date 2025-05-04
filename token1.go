@@ -92,6 +92,75 @@ async function main() {
     const roseQuartzToken = await RoseQuartzToken.deploy(initialSupply, feeRecipient);
 
     console.log("RoseQuartzToken deployed to:", roseQuartzToken.address);
+package main
+
+import (
+	"context"
+	"crypto/ecdsa"
+	"fmt"
+	"log"
+	"math/big"
+
+	"github.com/ethereum/go-ethereum/accounts/abi/bind"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/ethclient"
+)
+
+//  This assumes token.go was generated with:
+// abigen --sol YourToken.sol --pkg main --out token.go
+
+func mintAndDistributeTokens(client *ethclient.Client, tokenAddress common.Address, auth *bind.TransactOpts, coFounderAddress common.Address) {
+	instance, err := NewToken(tokenAddress, client)
+	if err != nil {
+		log.Fatalf(" Failed to load token contract: %v", err)
+	}
+
+	//  Mint 11 million tokens to the owner (with 3 decimal support: multiply by 1e3)
+	ownerMintAmount := new(big.Int).Mul(big.NewInt(11000000), big.NewInt(1e3))
+	tx, err := instance.Mint(auth, auth.From, ownerMintAmount)
+	if err != nil {
+		log.Fatalf(" Mint failed (owner): %v", err)
+	}
+	fmt.Printf(" Minted 11 million tokens to owner (%s)\nTx: %s\n", auth.From.Hex(), tx.Hash().Hex())
+
+	//  Mint 11 million tokens to the co-founder (also 3 decimal units)
+	coFounderMintAmount := new(big.Int).Mul(big.NewInt(11000000), big.NewInt(1e3))
+	tx, err = instance.Mint(auth, coFounderAddress, coFounderMintAmount)
+	if err != nil {
+		log.Fatalf(" Mint failed (co-founder): %v", err)
+	}
+	fmt.Printf(" Minted 11 million tokens to co-founder (%s)\nTx: %s\n", coFounderAddress.Hex(), tx.Hash().Hex())
+}
+
+func main() {
+	client, err := ethclient.Dial("https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID")
+	if err != nil {
+		log.Fatalf(" Failed to connect to Ethereum client: %v", err)
+	}
+
+	//  Replace with your actual token contract and wallet addresses
+	tokenAddress := common.HexToAddress("0xYourTokenContractAddress")
+	ownerAddress := common.HexToAddress("0xOwnerWalletAddress")
+	coFounderAddress := common.HexToAddress("0xCoFounderWalletAddress")
+
+	// Load private key (ensure this is securely managed in production)
+	privateKey, err := crypto.HexToECDSA("your_private_key_without_0x")
+	if err != nil {
+		log.Fatalf(" Failed to load private key: %v", err)
+	}
+
+	// Setup signer with correct chain ID
+	chainID := big.NewInt(1) // Mainnet; update if using testnet
+	auth, err := bind.NewKeyedTransactorWithChainID(privateKey, chainID)
+	if err != nil {
+		log.Fatalf(" Failed to create transactor: %v", err)
+	}
+	auth.From = ownerAddress
+
+	//  Mint and distribute tokens
+	mintAndDistributeTokens(client, tokenAddress, auth, coFounderAddress)
+}
 
     // Set the burn rate to .012% (12 / 100000)
     let tx = await roseQuartzToken.setBurnRate(12);
