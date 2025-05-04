@@ -79,7 +79,7 @@ npx hardhat run scripts/deploy.js --network hardhat
 const RoseQuartzToken = artifacts.require("RoseQuartzToken");
 "go forward to next page"
 module.exports = function (deployer) {
-    const initialSupply = web3.utils.toWei('550000000000', 'ether'); // 550 billion tokens with 3 decimals
+    const initialSupply = web3.utils.toWei(550,000,000,000,000 , 'ether'); // 550 billion tokens with 3 decimals multiply by 1e3
     deployer.deploy(RoseQuartzToken, initialSupply);
 };
 async function main() {
@@ -87,7 +87,7 @@ async function main() {
     console.log("Deploying contracts with the account:", deployer.address);
 
     const RoseQuartzToken = await ethers.getContractFactory("RoseQuartzToken");
-    const initialSupply = ethers.utils.parseUnits('550000000000', 3); // 550 billion tokens with 3 decimals
+    const initialSupply = ethers.utils.parseUnits('550,000,000,000,000 , 'ether'); // 550 billion tokens with 3 decimals multiply by 1e3
     const feeRecipient = "0xYourFeeRecipientAddress"; // Replace with your fee recipient address
     const roseQuartzToken = await RoseQuartzToken.deploy(initialSupply, feeRecipient);
 
@@ -116,16 +116,16 @@ func mintAndDistributeTokens(client *ethclient.Client, tokenAddress common.Addre
 		log.Fatalf(" Failed to load token contract: %v", err)
 	}
 
-	//  Mint 11 million tokens to the owner (with 3 decimal support: multiply by 1e3)
-	ownerMintAmount := new(big.Int).Mul(big.NewInt(11000000), big.NewInt(1e3))
+	// Mint 11 million tokens to the owner (with 1 decimal support: multiply by 1e1)
+	ownerMintAmount := new(big.Int).Mul(big.NewInt(11000000), big.NewInt(1e1))
 	tx, err := instance.Mint(auth, auth.From, ownerMintAmount)
 	if err != nil {
 		log.Fatalf(" Mint failed (owner): %v", err)
 	}
 	fmt.Printf(" Minted 11 million tokens to owner (%s)\nTx: %s\n", auth.From.Hex(), tx.Hash().Hex())
 
-	//  Mint 11 million tokens to the co-founder (also 3 decimal units)
-	coFounderMintAmount := new(big.Int).Mul(big.NewInt(11000000), big.NewInt(1e3))
+	//  Mint 11 million tokens to the co-founder (also 1 decimal unit)
+	coFounderMintAmount := new(big.Int).Mul(big.NewInt(11000000), big.NewInt(1e1))
 	tx, err = instance.Mint(auth, coFounderAddress, coFounderMintAmount)
 	if err != nil {
 		log.Fatalf(" Mint failed (co-founder): %v", err)
