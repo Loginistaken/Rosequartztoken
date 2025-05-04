@@ -255,8 +255,8 @@ func (t *Token) GetBurnRate() float64 {
 }
 
 func main() {
-	// Initialize token with 1.2% burn rate
-	token := NewToken("owner123", 0.012)
+	// Initialize token with .012% burn rate
+	token := NewToken("owner123", 0.00012)
 
 	// Attempt to increase the burn rate by 0.5%
 	err := token.IncreaseBurnRate("owner123", 0.005)
@@ -265,7 +265,7 @@ func main() {
 	}
 
 	// Output the new burn rate
-	fmt.Printf("New burn rate: %.2f%%\n", token.GetBurnRate()*100)
+	fmt.Printf("New burn rate: %.12f%%\n", token.GetBurnRate()*100)
 }
 						  package main
 
@@ -333,9 +333,7 @@ func displayFinalAcknowledgment() {
 	width := 84
 	title := "Final Acknowledgment • Multi-Language Blockchain System"
 	content := `
-This code is part of a multi-language system developed using Go, Java, and Geth.
-
-It includes blockchain logic, cryptographic automation, and AI-powered security.
+This code is part of a Geth language system developed using Go,includes blockchain logic, cryptographic automation, and AI-powered security.
 
 This project integrates suggestions from:
 • GitHub Copilot
